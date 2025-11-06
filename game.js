@@ -259,7 +259,7 @@ export class SnakeGame {
     saveScores() {
         localStorage.setItem('snakeScores', JSON.stringify(this.scores));
     }
-    
+    // comment
     async submitScore() {
         console.log('Submitting score...');
         const name = this.nameInput.value.trim();
