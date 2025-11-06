@@ -1,10 +1,5 @@
-// Import Jest's globals
-const { expect, test, describe, beforeEach, afterEach, jest } = require('@jest/globals');
-
-// Make Jest's expect and other globals available in all test files
-global.expect = expect;
-global.test = test;
-global.describe = describe;
+// This file is required by the jest.config.js and will be executed before each test file
+// No need to import or declare Jest globals here as they are already available in test files
 
 // Mock THREE.js
 global.THREE = {

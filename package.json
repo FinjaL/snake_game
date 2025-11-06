@@ -5,7 +5,7 @@
   "main": "game.js",
   "type": "module",
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test": "jest",
     "start:dev": "live-server --watch=**/*.js --open=game.html",
     "build": "mkdir -p dist && (cp -r *.html *.js dist/ 2>/dev/null || true)"
   },
@@ -18,31 +18,5 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^30.2.0",
     "live-server": "^1.2.2"
-  },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "transform": {
-      "^.+\\.(js|jsx|mjs)$": "babel-jest"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!(three)/)"
-    ],
-    "testEnvironmentOptions": {
-      "url": "http://localhost/"
-    },
-    "moduleNameMapper": {
-      "^\\.(jpg|jpeg|png|gif|webp|svg|mp3|wav)$": "<rootDir>/__mocks__/fileMock.js"
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>/jest.setup.js"
-    ],
-    "testMatch": [
-      "**/__tests__/**/*.test.js"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "node"
-    ]
   }
 }
