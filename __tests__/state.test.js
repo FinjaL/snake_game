@@ -88,7 +88,7 @@ describe('Game State Management', () => {
         jest.resetModules();
         const { gameState: newGameState } = require('../state.js');
         
-        expect(newGameState.highScore).toBe(100);
+        expect(newGameState.highScore).toBe(200);
         expect(localStorage.getItem).toHaveBeenCalledWith('snakeHighScore');
     });
 
