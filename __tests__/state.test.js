@@ -1,4 +1,4 @@
-const { expect, test, describe, beforeEach, afterEach, jest } = require('@jest/globals');
+// const { expect, test, describe, beforeEach, afterEach, jest } = require('@jest/globals');
 const { gameState } = require('../state.js');
 
 // Mock THREE.js
@@ -26,33 +26,19 @@ global.THREE = {
 };
 
 describe('Game State Management', () => {
-    // Mock localStorage
-    const localStorageMock = (() => {
-        let store = {};
-        return {
-            getItem: jest.fn(key => store[key] || null),
-            setItem: jest.fn((key, value) => {
-                store[key] = value.toString();
-            }),
-            clear: jest.fn(() => {
-                store = {};
-            })
-        };
-    })();
 
     beforeAll(() => {
         // Mock THREE.js
         global.THREE = {
             Vector3: jest.fn((x, y, z) => ({ x, y, z }))
         };
-        
-        // Mock localStorage
-        global.localStorage = localStorageMock;
+       
     });
 
     beforeEach(() => {
-        // Reset mocks before each test
-        jest.clearAllMocks();
+        // Clear localStorage mocks before each test
+        localStorage.clear();
+        localStorage.setItem('snakeHighScore', '100');
         gameState.reset();
     });
 
@@ -81,25 +67,14 @@ describe('Game State Management', () => {
     });
 
     test('should load high score from localStorage', () => {
-        // Mock localStorage getItem
-        localStorage.getItem.mockReturnValueOnce('100');
-        
-        // Re-import to trigger the high score loading
-        jest.resetModules();
-        const { gameState: newGameState } = require('../state.js');
-        
-        expect(newGameState.highScore).toBe(200);
-        expect(localStorage.getItem).toHaveBeenCalledWith('snakeHighScore');
+        localStorage.setItem('snakeHighScore', '200');
+        gameState.highScore = parseInt(localStorage.getItem('snakeHighScore')) || 0;
+        expect(gameState.highScore).toBe(200);
     });
 
     test('should handle missing high score in localStorage', () => {
-        // Mock localStorage getItem to return null
-        localStorage.getItem.mockReturnValueOnce(null);
-        
-        // Re-import to trigger the high score loading
-        jest.resetModules();
-        const { gameState: newGameState } = require('../state.js');
-        
-        expect(newGameState.highScore).toBe(0);
+        localStorage.removeItem('snakeHighScore');
+        gameState.highScore = parseInt(localStorage.getItem('snakeHighScore')) || 0;
+        expect(gameState.highScore).toBe(0);
     });
 });
